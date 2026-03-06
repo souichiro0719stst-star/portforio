@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>そっぴー | AI×SNS集客専門家</title>
+  <meta name="description" content="AIを使って、集客・発信・営業の仕組みをまるごと整える専門家。SNS運用から営業代行まで、売上につながる動きをワンストップで支援します。"/>
+  <meta property="og:title" content="そっぴー | AI×SNS集客専門家"/>
+  <meta property="og:description" content="AIを使って、集客・発信・営業の仕組みをまるごと整える専門家。"/>
+  <meta property="og:type" content="website"/>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%231a1a2e'/><text y='68' x='50' text-anchor='middle' font-size='52' font-family='serif' fill='%2364ffda'>そ</text></svg>"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg: #f8f7f4;
+      --bg2: #f0efe9;
+      --surface: #ffffff;
+      --dark: #111111;
+      --dark2: #2a2a2a;
+      --accent: #1a1a2e;
+      --green: #00a878;
+      --green-light: #e6f7f3;
+      --border: #e0ddd5;
+      --text: #222222;
+      --muted: #888888;
+      --font: 'Noto Sans JP', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font);
+      font-weight: 400;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── ナビゲーション ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(248, 247, 244, 0.95);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 5%;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 64px;
+    }
+    .nav-name {
+      font-weight: 700; font-size: 1.05rem;
+      color: var(--dark); letter-spacing: 0.03em;
+      text-decoration: none;
+    }
+    .nav-links {
+      display: flex; gap: 2rem; list-style: none; align-items: center;
+    }
+    .nav-links a {
+      color: var(--muted); text-decoration: none; font-size: 0.88rem;
+      font-weight: 500; transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--dark); }
+    .nav-cta {
+      background: var(--green) !important;
+      color: #fff !important;
+      padding: 0.5rem 1.2rem;
+      border-radius: 6px;
+      font-weight: 700 !important;
+      font-size: 0.85rem !important;
+      transition: opacity 0.2s !important;
+    }
+    .nav-cta:hover { opacity: 0.85; color: #fff !important; }
+
+    /* ── ヒーロー ── */
+    .hero {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      padding: 100px 5% 60px;
+      background: var(--accent);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 60% 60% at 80% 50%, rgba(0,168,120,0.15) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 80% at 10% 80%, rgba(100,255,218,0.06) 0%, transparent 60%);
+    }
+    .hero-inner {
+      position: relative; z-index: 1;
+      max-width: 720px;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: rgba(0,168,120,0.2);
+      border: 1px solid rgba(0,168,120,0.4);
+      color: #64ffda;
+      padding: 0.35rem 1rem;
+      border-radius: 100px;
+      font-size: 0.82rem; font-weight: 500;
+      margin-bottom: 2rem;
+      opacity: 0; animation: fadeUp 0.6s 0.1s forwards;
+    }
+    .hero-badge::before {
+      content: ''; width: 7px; height: 7px;
+      background: #64ffda; border-radius: 50%;
+      animation: blink 2s infinite;
+    }
+    .hero-title {
+      font-size: clamp(2rem, 4.5vw, 3.5rem);
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.3;
+      letter-spacing: -0.01em;
+      margin-bottom: 1.5rem;
+      opacity: 0; animation: fadeUp 0.6s 0.25s forwards;
+    }
+    .hero-title em {
+      font-style: normal;
+      color: #64ffda;
+    }
+    .hero-sub {
+      font-size: 1rem;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.9;
+      margin-bottom: 2.5rem;
+      max-width: 500px;
+      opacity: 0; animation: fadeUp 0.6s 0.4s forwards;
+    }
+    .hero-actions {
+      display: flex; gap: 1rem; flex-wrap: wrap;
+      opacity: 0; animation: fadeUp 0.6s 0.55s forwards;
+    }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: var(--green); color: #fff;
+      padding: 0.9rem 2rem; border-radius: 8px;
+      font-size: 0.95rem; font-weight: 700;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+      box-shadow: 0 4px 20px rgba(0,168,120,0.35);
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,168,120,0.45); }
+    .btn-outline {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: transparent; color: rgba(255,255,255,0.8);
+      border: 1px solid rgba(255,255,255,0.25);
+      padding: 0.9rem 2rem; border-radius: 8px;
+      font-size: 0.95rem; font-weight: 500;
+      text-decoration: none;
+      transition: background 0.2s, color 0.2s;
+    }
+    .btn-outline:hover { background: rgba(255,255,255,0.1); color: #fff; }
+
+    /* 実績バー */
+    .hero-stats {
+      display: flex; gap: 3rem; flex-wrap: wrap;
+      margin-top: 3.5rem; padding-top: 2.5rem;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      opacity: 0; animation: fadeUp 0.6s 0.7s forwards;
+    }
+    .hero-stat-num {
+      font-size: 1.7rem; font-weight: 700;
+      color: #64ffda; line-height: 1;
+    }
+    .hero-stat-label {
+      font-size: 0.76rem; color: rgba(255,255,255,0.45);
+      margin-top: 0.3rem; line-height: 1.5;
+    }
+
+    /* ── セクション共通 ── */
+    section { padding: 80px 5%; }
+    .section-header { margin-bottom: 3rem; }
+    .section-tag {
+      display: inline-block;
+      font-size: 0.75rem; font-weight: 700;
+      color: var(--green); letter-spacing: 0.1em;
+      margin-bottom: 0.5rem;
+    }
+    .section-title {
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      font-weight: 700; color: var(--dark);
+      line-height: 1.35; letter-spacing: -0.01em;
+    }
+    .section-desc {
+      margin-top: 0.7rem;
+      font-size: 0.93rem; color: var(--muted);
+      max-width: 540px; line-height: 1.8;
+    }
+
+    /* ── サービス ── */
+    #services { background: var(--bg); }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    .service-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 2rem;
+      transition: transform 0.25s, box-shadow 0.25s;
+      position: relative; overflow: hidden;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: var(--green);
+      transform: scaleX(0); transform-origin: left;
+      transition: transform 0.35s;
+    }
+    .service-card:hover { transform: translateY(-4px); box-shadow: 0 12px 36px rgba(0,0,0,0.08); }
+    .service-card:hover::before { transform: scaleX(1); }
+    .service-icon {
+      width: 48px; height: 48px;
+      background: var(--green-light);
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.4rem;
+      margin-bottom: 1.2rem;
+    }
+    .service-name {
+      font-size: 1.08rem; font-weight: 700;
+      color: var(--dark); margin-bottom: 0.75rem;
+      line-height: 1.35;
+    }
+    .service-body {
+      font-size: 0.875rem; color: #555;
+      line-height: 1.85;
+    }
+    .service-tags {
+      display: flex; flex-wrap: wrap; gap: 0.4rem;
+      margin-top: 1.4rem;
+    }
+    .stag {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      padding: 0.22rem 0.7rem;
+      border-radius: 100px;
+      font-size: 0.72rem; font-weight: 500;
+    }
+
+    /* ── 自己紹介 ── */
+    #about { background: var(--bg2); }
+    .about-inner {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+    .about-text {
+      font-size: 0.93rem; color: #444;
+      line-height: 2;
+    }
+    .about-text p + p { margin-top: 1rem; }
+    .about-highlight {
+      background: var(--surface);
+      border-left: 3px solid var(--green);
+      padding: 1rem 1.2rem;
+      border-radius: 0 8px 8px 0;
+      margin: 1.4rem 0;
+      font-size: 0.9rem; color: var(--dark2);
+      font-weight: 500; line-height: 1.75;
+    }
+    .about-stats {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
+      background: var(--border);
+      border-radius: 16px; overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .astat {
+      background: var(--surface);
+      padding: 1.8rem;
+      text-align: center;
+    }
+    .astat-num {
+      font-size: 2rem; font-weight: 700;
+      color: var(--green); line-height: 1;
+    }
+    .astat-label {
+      font-size: 0.76rem; color: var(--muted);
+      margin-top: 0.4rem; line-height: 1.5;
+    }
+
+    /* ── お問い合わせ ── */
+    #contact { background: var(--accent); }
+    .contact-inner {
+      max-width: 580px; margin: 0 auto;
+      text-align: center;
+    }
+    .contact-inner .section-tag { color: #64ffda; }
+    .contact-inner .section-title { color: #fff; }
+    .contact-inner .section-desc {
+      color: rgba(255,255,255,0.55);
+      margin: 0.8rem auto 0;
+      max-width: 420px;
+    }
+    .contact-box {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 16px;
+      padding: 2.5rem;
+      margin-top: 2.5rem;
+    }
+    .contact-email-link {
+      display: block;
+      font-size: 1rem; font-weight: 700;
+      color: #64ffda; text-decoration: none;
+      word-break: break-all;
+      margin-bottom: 1.6rem;
+      transition: opacity 0.2s;
+    }
+    .contact-email-link:hover { opacity: 0.7; }
+    .btn-contact {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: var(--green); color: #fff;
+      padding: 1rem 2.2rem; border-radius: 8px;
+      font-size: 0.95rem; font-weight: 700;
+      text-decoration: none;
+      box-shadow: 0 4px 20px rgba(0,168,120,0.4);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn-contact:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,168,120,0.5); }
+    .contact-note {
+      margin-top: 1rem;
+      font-size: 0.8rem; color: rgba(255,255,255,0.35);
+    }
+
+    /* ── フッター ── */
+    footer {
+      background: #0d0d1a;
+      padding: 1.6rem 5%;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .footer-copy { font-size: 0.76rem; color: rgba(255,255,255,0.3); }
+    .footer-top {
+      font-size: 0.76rem; color: rgba(255,255,255,0.3);
+      text-decoration: none; transition: color 0.2s;
+    }
+    .footer-top:hover { color: #64ffda; }
+
+    /* ── アニメーション ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.2; }
+    }
+    .reveal {
+      opacity: 0; transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-d1 { transition-delay: 0.1s; }
+    .reveal-d2 { transition-delay: 0.2s; }
+    .reveal-d3 { transition-delay: 0.3s; }
+
+    /* ── レスポンシブ ── */
+    @media (max-width: 900px) {
+      .services-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 680px) {
+      nav { padding: 0 4%; }
+      .nav-links li:not(:last-child) { display: none; }
+      .hero { padding: 90px 5% 50px; }
+      .hero-stats { gap: 1.8rem; }
+      section { padding: 60px 5%; }
+      .services-grid { grid-template-columns: 1fr; }
+      .about-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+      footer { flex-direction: column; gap: 0.6rem; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ナビゲーション -->
+<nav>
+  <a href="#" class="nav-name">水流 創一朗</a>
+  <ul class="nav-links">
+    <li><a href="#services">サービス</a></li>
+    <li><a href="#about">自己紹介</a></li>
+
+  </ul>
+</nav>
+
+<!-- ヒーロー -->
+<section class="hero">
+  <div class="hero-inner">
+    <h1 class="hero-title">
+      AIを使って、集客の仕組みを<br/>
+      <em>まるごと整えます。</em>
+    </h1>
+    <p class="hero-sub">
+      SNSの発信・運用から営業代行まで、<br/>
+      売上につながる動きをワンストップで支援します。
+    </p>
+
+    <div class="hero-stats">
+      <div>
+        <div class="hero-stat-num">52万円</div>
+        <div class="hero-stat-label">個人月間売上<br/>（2026年1月）</div>
+      </div>
+      <div>
+        <div class="hero-stat-num">4年連続</div>
+        <div class="hero-stat-label">営業ノルマ<br/>達成</div>
+      </div>
+      <div>
+        <div class="hero-stat-num">AI特化</div>
+        <div class="hero-stat-label">競合分析・<br/>GPTs開発</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- サービス -->
+<section id="services">
+  <div class="section-header reveal">
+    <div class="section-tag">サービス内容</div>
+    <h2 class="section-title">3つの支援メニュー</h2>
+  </div>
+  <div class="services-grid">
+    <div class="service-card reveal reveal-d1">
+      <div class="service-icon">🤖</div>
+      <div class="service-name">AI×SNS集客支援</div>
+      <div class="service-body">
+        AIで競合アカウントを分析し、あなたのナレッジと掛け合わせた投稿を量産する仕組みを設計・構築します。オリジナルGPTsの作成、投稿台本のライティング代行まで一貫して対応。「何を発信すればいいか分からない」「投稿が続かない」を根本から解決します。
+      </div>
+      <div class="service-tags">
+        <span class="stag">AI分析</span>
+        <span class="stag">GPTs開発</span>
+        <span class="stag">台本作成</span>
+        <span class="stag">仕組み化</span>
+      </div>
+    </div>
+    <div class="service-card reveal reveal-d2">
+      <div class="service-icon">📱</div>
+      <div class="service-name">Threads運用代行</div>
+      <div class="service-body">
+        投稿作成から導線設計まで丸ごと代行します。AIを使った競合分析をベースに、フォロワーが増え・問い合わせにつながる投稿を継続提供。LINE登録につながる特典作成とリスト化の仕組みづくりも得意としています。
+      </div>
+      <div class="service-tags">
+        <span class="stag">Threads</span>
+        <span class="stag">投稿代行</span>
+        <span class="stag">導線設計</span>
+        <span class="stag">LINEリスト化</span>
+      </div>
+    </div>
+    <div class="service-card reveal reveal-d3">
+      <div class="service-icon">🤝</div>
+      <div class="service-name">営業代行</div>
+      <div class="service-body">
+        医療機器営業4年・4年連続ノルマ達成の現場経験をベースに、相手の悩みをしっかり聴いた上で最適な提案を行うスタイルで成約率を高めます。押し売りではなく信頼関係を丁寧に構築。SNS集客との組み合わせも可能です。
+      </div>
+      <div class="service-tags">
+        <span class="stag">営業設計</span>
+        <span class="stag">成約率向上</span>
+        <span class="stag">SNS連携</span>
+        <span class="stag">信頼構築</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 自己紹介 -->
+<section id="about">
+  <div class="section-header reveal">
+    <div class="section-tag">自己紹介</div>
+    <h2 class="section-title">水流 創一朗（そっぴー）</h2>
+  </div>
+  <div class="about-inner">
+    <div class="reveal">
+      <div class="about-text">
+        <p>医療機器営業として4年間、現場で数字を追い続けながら、個人でAI×SNS集客の仕組みを構築してきました。</p>
+        <div class="about-highlight">
+          AIを活用した競合分析・台本ライティング・GPTs開発を得意とし、2026年1月には個人売上52万円を達成。
+        </div>
+        <p>現在はその経験をもとに、SNS集客・運用代行・営業代行を通じて、個人・法人のビジネス成長を支援しています。</p>
+      </div>
+    </div>
+    <div class="about-stats reveal reveal-d1">
+      <div class="astat">
+        <div class="astat-num">4年</div>
+        <div class="astat-label">医療機器営業<br/>経験</div>
+      </div>
+      <div class="astat">
+        <div class="astat-num">4回</div>
+        <div class="astat-label">連続ノルマ<br/>達成</div>
+      </div>
+      <div class="astat">
+        <div class="astat-num">52万</div>
+        <div class="astat-label">個人月間売上<br/>（2026年1月）</div>
+      </div>
+      <div class="astat">
+        <div class="astat-num">AI</div>
+        <div class="astat-label">GPTs開発・<br/>競合分析</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- お問い合わせ -->
+<section id="contact">
+  <div class="contact-inner reveal">
+    <div class="section-tag">お問い合わせ</div>
+    <h2 class="section-title" style="color:#fff;">まずは気軽にご相談を</h2>
+    <p class="section-desc" style="color:rgba(255,255,255,0.55);max-width:400px;margin:0.8rem auto 0;">「こんなことできる？」という軽いご相談からでも大歓迎です。通常24時間以内にご返信します。</p>
+    <div class="contact-box">
+      <a href="mailto:souichiro0719stst@gmail.com" class="contact-email-link">
+        souichiro0719stst@gmail.com
+      </a>
+      <a href="mailto:souichiro0719stst@gmail.com" class="btn-contact">
+        メールで相談する →
+      </a>
+      <p class="contact-note">返信まで通常24時間以内</p>
+    </div>
+  </div>
+</section>
+
+<!-- フッター -->
+<footer>
+  <span class="footer-copy">© 2025 水流 創一朗（そっぴー）</span>
+  <a href="#" class="footer-top">上に戻る ↑</a>
+</footer>
+
+<script>
+  const io = new IntersectionObserver(
+    entries => entries.forEach(e => e.isIntersecting && e.target.classList.add('visible')),
+    { threshold: 0.1 }
+  );
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  document.querySelectorAll('section[id]').forEach(sec => {
+    new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        document.querySelectorAll('.nav-links a').forEach(a => { if (!a.classList.contains('nav-cta')) a.style.color = ''; });
+        const a = document.querySelector(`.nav-links a[href="#${sec.id}"]`);
+        if (a && !a.classList.contains('nav-cta')) a.style.color = '#111';
+      });
+    }, { threshold: 0.5 }).observe(sec);
+  });
+</script>
+</body>
+</html>
